@@ -13,6 +13,8 @@
 	<script src="{% static '/vendors/jquery-ui/jquery-ui.min.js' %}"></script>
 	<script src="{% static '/vendors/hammer/hammer.min.js' %}"></script>
 	<script src="{% static '/vendors/hammer/jquery.hammer.js' %}"></script>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="viewport" content="width=device-width, user-scalable=no" />
@@ -46,11 +48,13 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
+      transform: rotate(0deg);
 		}
 
 		.action-complete {
 			background: #ffffff;
 		}
+   
 	</style>
 
 </head>
@@ -74,7 +78,7 @@
 						<div class="small-box" id="pan-box">Pan</div>
 					</div>
 					<div class="large-box">
-						<div class="small-box" id="tap-box">Tap to Change Color</div>
+						<div class="small-box" id="tap-box">Tap</div>
 					</div>
 					<div class="large-box">
 						<div class="small-box" id="swipe-box">Swipe</div>
@@ -85,10 +89,61 @@
 	</div>
 	<script>
 	  // your solution here
-    
-    var rotate_element = document.getElementById("rotate-box");
-    var ham_rotate = new Hammer(rotate_element);
+
+    //rotate    
+    $(function(){
+    var rot = document.getElementById("rotate-box");
+    var ham_rotate = new Hammer(rot);
     ham_rotate.get('rotate').set({ enable: true });
+    ham_rotate.on("rotate", function() {
+          rot.style.transform = "rotate(90deg)";
+    });
+    });  
+    
+    
+    //pinch
+    
+    $(function(){
+    var pincher = document.getElementById("pinch-box");
+    var ham_pincher = new Hammer(pincher);
+    ham_pincher.get('pinch').set({ enable: true });
+    ham_pincher.on("pinch", function() {
+          pincher.style.height = "30px";
+          pincher.style.width = "30px";
+    });
+    });    
+    
+    //press
+    
+    $(function(){
+    var presser = document.getElementById("press-box");
+    var large = false;
+    
+    Hammer(presser).on("press", function() {
+      
+      if (large) {
+          large=false;
+          presser.style.height = "100px";
+          presser.style.width = "100px";
+      } else { 
+          presser.style.height = "200px";
+          presser.style.width = "200px";
+          large = true;
+      }
+    });
+    });
+    
+    //pan
+    
+    $(function(){
+    var panner = document.getElementById("pan-box");
+    
+    Hammer(panner).on("pan", function() {
+          alert("what is panning");
+    });
+    });
+    
+    //tap
     
     var white = false;
     var tapElement = document.getElementById('tap-box');
@@ -98,14 +153,26 @@
         if (white) {
           tapElement.style.background = "#7ce6df";
           white=false;
-          alert(white);
         } else {
           tapElement.style.background = "#ffffff";
           white=true;
-          alert(white);
         }
     });
     
+    //swipe
+    
+    $(function(){
+    var swiper = document.getElementById("swipe-box");
+    
+    Hammer(swiper).on("swipeleft", function() {
+          swiper.style.background = "#7ce6df";
+          $("#swipe-box").animate({left: '250px'});
+          alert("hmm what");
+    });
+    Hammer(swiper).on("swiperight", function() {
+          alert("wow neat !");
+    });
+    });
     
   </script>
 </body>
