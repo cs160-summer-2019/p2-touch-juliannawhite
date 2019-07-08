@@ -48,7 +48,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-      transform: rotate(0deg);
+      transform: rotate(0deg);     
 		}
 
 		.action-complete {
@@ -77,7 +77,7 @@
 					<div class="large-box">
 						<div class="small-box" id="pan-box">Pan</div>
 					</div>
-					<div class="large-box">
+					<div class="large-box" id="big-tap-box">
 						<div class="small-box" id="tap-box">Tap</div>
 					</div>
 					<div class="large-box">
@@ -134,46 +134,63 @@
     });
     
     //pan
+  
     
     $(function(){
     var panner = document.getElementById("pan-box");
     
     Hammer(panner).on("pan", function() {
-          alert("what is panning");
+      alert("i hate panning");
+
+   });
     });
+    
+    
+    
+    $('#pan-box').on("mousedown",function(e){
+        var container = $(this);
+        var move = $('#pan-box');
+        obj.startPositionX=e.pageX-translate.x;
+        obj.startPositionY=e.pageY-translate.y;
+        $(document).on("mousemove",function(e){
+            translate.x=e.pageX-obj.startPositionX;
+            translate.y=e.pageY-obj.startPositionY;
+            $('#pan-box').css('transform','scale('+scale+') translate('+translate.x+'px, '+translate.y+'px)');
+        });
+
+    });
+    $(document).on("mouseup",function(){
+        $(this).off("mousemove");
     });
     
     //tap
     
     var white = false;
     var tapElement = document.getElementById('tap-box');
+    var bigTap = document.getElementById('big-tap-box');
     var mc_tap = new Hammer.Manager(tapElement);
     mc_tap.add( new Hammer.Tap({ event:'singletap'}) );
     mc_tap.on("singletap", function(ev) {
         if (white) {
-          tapElement.style.background = "#7ce6df";
+          tapElement.style.color="#7ce6df";
+          tapElement.style.background = "#0d124a";
+          bigTap.style.background="#7ce6df";
           white=false;
         } else {
-          tapElement.style.background = "#ffffff";
+          bigTap.style.background = "#0d124a";
+          tapElement.style.background="#7ce6df";
+          tapElement.style.color = "#0d124a";
           white=true;
         }
     });
     
     //swipe
-    
-    $(function(){
     var swiper = document.getElementById("swipe-box");
-    
-    Hammer(swiper).on("swipeleft", function() {
-          swiper.style.background = "#7ce6df";
-          $("#swipe-box").animate({left: '250px'});
-          alert("hmm what");
-    });
-    Hammer(swiper).on("swiperight", function() {
-          alert("wow neat !");
-    });
+    $(document).ready(function(){
+      Hammer(swiper).on("swipeleft", function() {("#swipe-box").animate({left: '350px'});});
     });
     
+
   </script>
 </body>
 </html>
