@@ -74,7 +74,7 @@
 						<div class="small-box" id="pan-box">Pan</div>
 					</div>
 					<div class="large-box">
-						<div class="small-box" id="tap-box">Tap</div>
+						<div class="small-box" id="tap-box">Tap to Change Color</div>
 					</div>
 					<div class="large-box">
 						<div class="small-box" id="swipe-box">Swipe</div>
@@ -90,10 +90,21 @@
     var ham_rotate = new Hammer(rotate_element);
     ham_rotate.get('rotate').set({ enable: true });
     
-    var tap_element = document.getElementById("tap-box");
-    var ham_tap = new Hammer(tap_element);
-    ham_tap.get('tap').set({ enable: true });
-
+    var white = false;
+    var tapElement = document.getElementById('tap-box');
+    var mc_tap = new Hammer.Manager(tapElement);
+    mc_tap.add( new Hammer.Tap({ event:'singletap'}) );
+    mc_tap.on("singletap", function(ev) {
+        if (white) {
+          tapElement.style.background = "#7ce6df";
+          white=false;
+          alert(white);
+        } else {
+          tapElement.style.background = "#ffffff";
+          white=true;
+          alert(white);
+        }
+    });
     
     
   </script>
