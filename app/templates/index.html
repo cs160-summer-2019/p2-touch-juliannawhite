@@ -74,7 +74,7 @@
 					<div class="large-box">
 						<div class="small-box" id="press-box">Press</div>
 					</div>
-					<div class="large-box">
+					<div class="large-box" id="big-pan-box">
 						<div class="small-box" id="pan-box">Pan</div>
 					</div>
 					<div class="large-box" id="big-tap-box">
@@ -138,10 +138,11 @@
     
     $(function(){
     var panner = document.getElementById("pan-box");
-    
+    var bigPan = document.getElementById('big-pan-box');
     Hammer(panner).on("pan", function() {
-      alert("i hate panning");
-
+      panner.style.color="#7ce6df";
+      panner.style.background = "#7ce6df";
+      bigPan.style.background="#7ce6df";
    });
     });
     
