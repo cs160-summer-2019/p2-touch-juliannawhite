@@ -186,9 +186,15 @@
     
     //swipe
     var swiper = document.getElementById("swipe-box");
-    $(document).ready(function(){
-      Hammer(swiper).on("swipeleft", function() {("#swipe-box").animate({left: '350px'});});
+    Hammer(swiper).on("swipeleft", function() {
+      swiper.style.justifyContent = "flex-start";
     });
+    
+    Hammer(swiper).on("swiperight", function() {
+      swiper.style.justifyContent = "flex-end";
+    });
+      
+ 
     
 
   </script>
